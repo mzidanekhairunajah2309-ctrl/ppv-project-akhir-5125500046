@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MMB Media & Event Hub — Prototipe Terpadu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="logo-icon" aria-hidden="true">🎬</span>
+      <h1>MMB Hub</h1>
+    </div>
+    <nav class="nav-tab" aria-label="Navigasi Utama">
+      <button type="button" data-view="event" aria-current="page">Event & Agenda</button>
+      <button type="button" data-view="galeri">Galeri Karya</button>
+      <button type="button" data-view="tentang">Tentang Pembuat</button>
+    </nav>
+  </header>
+
+  <main class="app-container">
+    <!-- Tampilan 1: Event & Agenda -->
+    <section id="event" class="view-section aktif" aria-labelledby="judul-event">
+      <h2 id="judul-event">Agenda & Pendaftaran Event MMB</h2>
+      
+      <div class="card-box">
+        <h3>Pendaftaran Cepat Event</h3>
+        <form id="form-rsvp" novalidate>
+          <div class="form-group">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" name="nama" placeholder="mis. Muhammad Zidane" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="pilihan-event">Pilih Event</label>
+            <select id="pilihan-event" name="pilihan-event">
+              <option value="">-- Pilih Event --</option>
+              <option value="MMB Fest 2026">MMB FEST 2026</option>
+              <option value="Workshop Motion Graphics">Workshop Motion Graphics</option>
+              <option value="Screening Film Pendek">Screening Film Pendek Kampus</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary">Daftar Sekarang</button>
+          <p id="pesan-form" class="pesan-status" role="alert"></p>
+        </form>
+      </div>
+
+      <div class="section-title">Daftar Agenda Mendatang</div>
+      <div id="event-grid" class="grid-container">
+        <article class="card">
+          <span class="badge">Festival</span>
+          <h4>MMB FEST 2026</h4>
+          <p class="meta">📍 Gedung PENS | 📅 24 Oktober 2026</p>
+          <p>Festival tahunan pameran karya multimedia, musik indie, dan pasar kreatif MMB.</p>
+        </article>
+        <article class="card">
+          <span class="badge">Workshop</span>
+          <h4>Workshop Motion Graphics</h4>
+          <p class="meta">📍 Lab Studio MMB | 📅 02 November 2026</p>
+          <p>Pelatihan animasi antarmuka dan aset visual 2D menggunakan After Effects & Lottie.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Tampilan 2: Galeri Karya (Media Gambar & Audio) -->
+    <section id="galeri" class="view-section" hidden aria-labelledby="judul-galeri">
+      <h2 id="judul-galeri">Galeri Karya & Aset Media</h2>
+
+      <!-- Media 2: Audio Player -->
+      <div class="card-box audio-card">
+        <h3>🎵 Audio Highlight: Theme Song MMB FEST</h3>
+        <p class="meta">Sampel audio promosi event MMB FEST 2026</p>
+        <audio controls class="audio-player">
+          <source src="assets/jingle-mmbfest.mp3" type="audio/mpeg">
+          <source src="assets/jingle-mmbfest.ogg" type="audio/ogg">
+          Peramban Anda tidak mendukung elemen pemutar audio.
+        </audio>
+      </div>
+
+      <!-- Media 1: Gambar dengan Fallback Error Handler -->
+      <div class="grid-container">
+        <article class="card media-card">
+          <div class="img-wrapper">
+            <img src="assets/poster-mmbfest.jpg" alt="Poster Resmi MMB FEST 2026" class="media-img">
+          </div>
+          <div class="card-body">
+            <h4>Brand Identity MMB FEST 2026</h4>
+            <p>Supergraphics & pedoman visual identitas brand MMB FEST.</p>
+          </div>
+        </article>
+
+        <article class="card media-card">
+          <div class="img-wrapper">
+            <img src="assets/kopi-tjangkir.jpg" alt="Desain Aset Motion Graphics Kopi Tjangkir" class="media-img">
+          </div>
+          <div class="card-body">
+            <h4>Motion Graphics Kopi Tjangkir</h4>
+            <p>Katalog aset animasi promosional cafe dan spot kreatif.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Tampilan 3: Tentang Pembuat -->
+    <section id="tentang" class="view-section" hidden aria-labelledby="judul-tentang">
+      <h2 id="judul-tentang">Tentang Pembuat Prototipe</h2>
+      
+      <div class="card-box profile-card">
+        <div class="profile-header">
+          <div class="avatar">MZ</div>
+          <div>
+            <h3>Muhammad Zidane Khairu Najah</h3>
+            <p class="meta">NRP: 5125500046 | Kelas: 3 D3 MM B</p>
+            <p class="meta">Politeknik Elektronika Negeri Surabaya (PENS)</p>
+          </div>
+        </div>
+        <hr class="divider">
+        <h4>Fokus Keahlian & Minat:</h4>
+        <ul class="skills-list">
+          <li>🎨 Graphic Design & Visual Brand Identity</li>
+          <li>🎬 Motion Graphics & 2D Animation</li>
+          <li>💻 Pemrograman Visual & Front-End Web Development</li>
+        </ul>
+        <p class="note">Aplikasi ini dikembangkan sebagai Tugas 4 Praktikum Pemrograman Visual (TB033109).</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
