@@ -24,8 +24,3 @@ src/main.js         logika aplikasi
 assets/             gambar dan audio
 docs/               charter dan roadmap
 ```
-
-## Penggunaan asisten AI
-Sebagian kode dan dokumen pada Sprint 1 (P09) dibuat dengan bantuan Claude (Anthropic): `index.html` versi Bootstrap, `src/style.css`, `src/ui-pustaka.js`, `src/main.js`, `docs/CHARTER.md`, `docs/ROADMAP.md`, `DEPENDENCIES.md`.
-Aset `assets/poster-mmbfest.jpg`, `assets/kopi-tjangkir.jpg`, `assets/jingle-mmbfest.mp3`, dan `assets/jingle-mmbfest.ogg` adalah aset pengganti (placeholder) yang dibuat dengan bantuan Claude; ganti dengan karya asli bila tersedia.
-Prompt/tautan percakapan: **[TEMPEL TAUTAN ATAU PROMPT DI SINI]**
