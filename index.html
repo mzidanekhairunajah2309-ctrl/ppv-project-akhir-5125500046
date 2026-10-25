@@ -3,129 +3,164 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MMB Media & Event Hub — Prototipe Terpadu</title>
+  <title>MMB Media & Event Hub — Project Akhir PPV</title>
+  <!-- Bootstrap 5.3.3 (versi terkunci). Urutan penting: pustaka dulu, gaya sendiri sesudahnya. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
-  <header class="app-header">
-    <div class="brand">
-      <span class="logo-icon" aria-hidden="true">🎬</span>
-      <h1>MMB Hub</h1>
-    </div>
-    <nav class="nav-tab" aria-label="Navigasi Utama">
-      <button type="button" data-view="event" aria-current="page">Event & Agenda</button>
-      <button type="button" data-view="galeri">Galeri Karya</button>
-      <button type="button" data-view="tentang">Tentang Pembuat</button>
-    </nav>
-  </header>
+  <a class="visually-hidden-focusable" href="#konten">Lewati ke konten</a>
 
-  <main class="app-container">
+  <!-- KOMPONEN 1: Navbar (collapse di layar sempit) -->
+  <nav class="navbar navbar-expand-md app-navbar sticky-top" aria-label="Navigasi utama">
+    <div class="container">
+      <a class="navbar-brand" href="#event" data-view="event"><span aria-hidden="true">🎬</span> MMB Hub</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuUtama"
+              aria-controls="menuUtama" aria-expanded="false" aria-label="Buka menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuUtama">
+        <ul class="navbar-nav ms-md-auto" id="menu-tampilan">
+          <li class="nav-item"><button type="button" class="nav-link active" data-view="event" aria-current="page">Event &amp; Agenda</button></li>
+          <li class="nav-item"><button type="button" class="nav-link" data-view="galeri">Galeri Karya</button></li>
+          <li class="nav-item"><button type="button" class="nav-link" data-view="tentang">Tentang Pembuat</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main id="konten" class="container app-container py-4">
+
     <!-- Tampilan 1: Event & Agenda -->
     <section id="event" class="view-section aktif" aria-labelledby="judul-event">
-      <h2 id="judul-event">Agenda & Pendaftaran Event MMB</h2>
-      
-      <div class="card-box">
-        <h3>Pendaftaran Cepat Event</h3>
-        <form id="form-rsvp" novalidate>
-          <div class="form-group">
-            <label for="nama">Nama Lengkap</label>
-            <input type="text" id="nama" name="nama" placeholder="mis. Muhammad Zidane" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label for="pilihan-event">Pilih Event</label>
-            <select id="pilihan-event" name="pilihan-event">
-              <option value="">-- Pilih Event --</option>
-              <option value="MMB Fest 2026">MMB FEST 2026</option>
-              <option value="Workshop Motion Graphics">Workshop Motion Graphics</option>
-              <option value="Screening Film Pendek">Screening Film Pendek Kampus</option>
-            </select>
-          </div>
-          <button type="submit" class="btn-primary">Daftar Sekarang</button>
-          <p id="pesan-form" class="pesan-status" role="alert"></p>
-        </form>
+      <h1 id="judul-event" class="h3 mb-3">Agenda &amp; Pendaftaran Event MMB</h1>
+
+      <!-- KOMPONEN 2: Card (form pendaftaran) -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="h5 card-title">Pendaftaran Cepat Event</h2>
+          <form id="form-rsvp" novalidate>
+            <div class="mb-3">
+              <label for="nama" class="form-label">Nama Lengkap</label>
+              <input type="text" id="nama" name="nama" class="form-control" placeholder="mis. Muhammad Zidane" autocomplete="off" aria-describedby="err-nama">
+              <div id="err-nama" class="invalid-feedback" role="alert"></div>
+            </div>
+            <div class="mb-3">
+              <label for="pilihan-event" class="form-label">Pilih Event</label>
+              <select id="pilihan-event" name="pilihan-event" class="form-select" aria-describedby="err-event"></select>
+              <div id="err-event" class="invalid-feedback" role="alert"></div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Daftar Sekarang</button>
+          </form>
+        </div>
       </div>
 
-      <div class="section-title">Daftar Agenda Mendatang</div>
-      <div id="event-grid" class="grid-container">
-        <article class="card">
-          <span class="badge">Festival</span>
-          <h4>MMB FEST 2026</h4>
-          <p class="meta">📍 Gedung PENS | 📅 24 Oktober 2026</p>
-          <p>Festival tahunan pameran karya multimedia, musik indie, dan pasar kreatif MMB.</p>
-        </article>
-        <article class="card">
-          <span class="badge">Workshop</span>
-          <h4>Workshop Motion Graphics</h4>
-          <p class="meta">📍 Lab Studio MMB | 📅 02 November 2026</p>
-          <p>Pelatihan animasi antarmuka dan aset visual 2D menggunakan After Effects & Lottie.</p>
-        </article>
-      </div>
+      <h2 class="section-title">Daftar Agenda Mendatang</h2>
+      <div id="event-grid" class="row g-3"></div>
     </section>
 
-    <!-- Tampilan 2: Galeri Karya (Media Gambar & Audio) -->
+    <!-- Tampilan 2: Galeri Karya (media gambar + audio) -->
     <section id="galeri" class="view-section" hidden aria-labelledby="judul-galeri">
-      <h2 id="judul-galeri">Galeri Karya & Aset Media</h2>
+      <h1 id="judul-galeri" class="h3 mb-3">Galeri Karya &amp; Aset Media</h1>
 
-      <!-- Media 2: Audio Player -->
-      <div class="card-box audio-card">
-        <h3>🎵 Audio Highlight: Theme Song MMB FEST</h3>
-        <p class="meta">Sampel audio promosi event MMB FEST 2026</p>
-        <audio controls class="audio-player">
-          <source src="assets/jingle-mmbfest.mp3" type="audio/mpeg">
-          <source src="assets/jingle-mmbfest.ogg" type="audio/ogg">
-          Peramban Anda tidak mendukung elemen pemutar audio.
-        </audio>
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="h5 card-title"><span aria-hidden="true">🎵</span> Audio Highlight: Theme Song MMB FEST</h2>
+          <p class="text-body-secondary small">Sampel audio promosi event MMB FEST 2026</p>
+          <audio id="audio-jingle" controls class="w-100">
+            <source src="assets/jingle-mmbfest.mp3" type="audio/mpeg">
+            <source src="assets/jingle-mmbfest.ogg" type="audio/ogg">
+            Peramban Anda tidak mendukung elemen pemutar audio.
+          </audio>
+          <p id="audio-pesan" class="text-danger small mt-2 mb-0" role="status" hidden>Audio belum bisa dimuat. Coba muat ulang halaman.</p>
+        </div>
       </div>
 
-      <!-- Media 1: Gambar dengan Fallback Error Handler -->
-      <div class="grid-container">
-        <article class="card media-card">
-          <div class="img-wrapper">
-            <img src="assets/poster-mmbfest.jpg" alt="Poster Resmi MMB FEST 2026" class="media-img">
-          </div>
-          <div class="card-body">
-            <h4>Brand Identity MMB FEST 2026</h4>
-            <p>Supergraphics & pedoman visual identitas brand MMB FEST.</p>
-          </div>
-        </article>
-
-        <article class="card media-card">
-          <div class="img-wrapper">
-            <img src="assets/kopi-tjangkir.jpg" alt="Desain Aset Motion Graphics Kopi Tjangkir" class="media-img">
-          </div>
-          <div class="card-body">
-            <h4>Motion Graphics Kopi Tjangkir</h4>
-            <p>Katalog aset animasi promosional cafe dan spot kreatif.</p>
-          </div>
-        </article>
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <article class="card h-100 shadow-sm">
+            <div class="img-wrapper m-3 mb-0">
+              <img src="assets/poster-mmbfest.jpg" alt="Poster Resmi MMB FEST 2026" class="media-img" loading="lazy">
+            </div>
+            <div class="card-body">
+              <h2 class="h5 card-title">Brand Identity MMB FEST 2026</h2>
+              <p class="card-text">Supergraphics &amp; pedoman visual identitas brand MMB FEST.</p>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6">
+          <article class="card h-100 shadow-sm">
+            <div class="img-wrapper m-3 mb-0">
+              <img src="assets/kopi-tjangkir.jpg" alt="Desain Aset Motion Graphics Kopi Tjangkir" class="media-img" loading="lazy">
+            </div>
+            <div class="card-body">
+              <h2 class="h5 card-title">Motion Graphics Kopi Tjangkir</h2>
+              <p class="card-text">Katalog aset animasi promosional cafe dan spot kreatif.</p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
     <!-- Tampilan 3: Tentang Pembuat -->
     <section id="tentang" class="view-section" hidden aria-labelledby="judul-tentang">
-      <h2 id="judul-tentang">Tentang Pembuat Prototipe</h2>
-      
-      <div class="card-box profile-card">
-        <div class="profile-header">
-          <div class="avatar">MZ</div>
-          <div>
-            <h3>Muhammad Zidane Khairu Najah</h3>
-            <p class="meta">NRP: 5125500046 | Kelas: 3 D3 MM B</p>
-            <p class="meta">Politeknik Elektronika Negeri Surabaya (PENS)</p>
+      <h1 id="judul-tentang" class="h3 mb-3">Tentang Pembuat Prototipe</h1>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="avatar" aria-hidden="true">MZ</div>
+            <div>
+              <h2 class="h5 mb-1">Muhammad Zidane Khairu Najah</h2>
+              <p class="text-body-secondary small mb-0">NRP: 5125500046 | Kelas: 3 D3 MM B</p>
+              <p class="text-body-secondary small mb-0">Politeknik Elektronika Negeri Surabaya (PENS)</p>
+            </div>
           </div>
+          <hr>
+          <h3 class="h6">Fokus Keahlian &amp; Minat:</h3>
+          <ul>
+            <li>🎨 Graphic Design &amp; Visual Brand Identity</li>
+            <li>🎬 Motion Graphics &amp; 2D Animation</li>
+            <li>💻 Pemrograman Visual &amp; Front-End Web Development</li>
+          </ul>
+          <p class="small text-body-secondary mb-0">Dikembangkan dari Tugas 4 menjadi Project Akhir Praktikum Pemrograman Visual (TB033109).</p>
         </div>
-        <hr class="divider">
-        <h4>Fokus Keahlian & Minat:</h4>
-        <ul class="skills-list">
-          <li>🎨 Graphic Design & Visual Brand Identity</li>
-          <li>🎬 Motion Graphics & 2D Animation</li>
-          <li>💻 Pemrograman Visual & Front-End Web Development</li>
-        </ul>
-        <p class="note">Aplikasi ini dikembangkan sebagai Tugas 4 Praktikum Pemrograman Visual (TB033109).</p>
       </div>
     </section>
   </main>
 
+  <!-- KOMPONEN 3: Modal (detail event) -->
+  <div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="judulDetail" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="judulDetail" data-judul></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-body-secondary small" data-meta></p>
+          <p data-isi class="mb-0"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary" id="tombol-daftar-modal">Daftar event ini</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KOMPONEN 4: Toast (umpan balik pendaftaran) -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastInfo" class="toast align-items-center text-bg-success border-0" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" data-pesan></div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Tutup"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bundle JS Bootstrap (sudah termasuk Popper), versi terkunci. Hanya ui-pustaka.js yang memanggil API-nya. -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="src/ui-pustaka.js" defer></script>
   <script src="src/main.js" defer></script>
 </body>
 </html>
