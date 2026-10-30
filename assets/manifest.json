@@ -1,0 +1,30 @@
+[
+  {
+    "berkas": "jingle-mmbfest.mp3",
+    "jenis": "audio/mpeg",
+    "ukuran_kb": 106,
+    "sumber": "Produksi Internal MMB",
+    "lisensi": "Hak Cipta"
+  },
+  {
+    "berkas": "jingle-mmbfest.ogg",
+    "jenis": "audio/ogg",
+    "ukuran_kb": 45,
+    "sumber": "Produksi Internal MMB",
+    "lisensi": "Hak Cipta"
+  },
+  {
+    "berkas": "poster-mmbfest.jpg",
+    "jenis": "image/jpeg",
+    "ukuran_kb": 78,
+    "sumber": "Desain Mandiri / Tim MMB",
+    "lisensi": "All Rights Reserved"
+  },
+  {
+    "berkas": "kopi-tjangkir.jpg",
+    "jenis": "image/jpeg",
+    "ukuran_kb": 42,
+    "sumber": "Desain Mandiri",
+    "lisensi": "All Rights Reserved"
+  }
+]
