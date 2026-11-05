@@ -1,0 +1,99 @@
+/* style.css — gaya sendiri MMB Hub. Dimuat SESUDAH bootstrap.min.css (lihat index.html).
+   Tema diubah lewat variabel CSS Bootstrap (--bs-*), bukan menimpa aturan internalnya.
+   Palet berasal dari Tugas 4. */
+
+:root {
+  --primary: #1e3a8a;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --muted: #64748b;
+
+  /* variabel global Bootstrap */
+  --bs-primary: var(--accent);
+  --bs-primary-rgb: 37, 99, 235;
+  --bs-body-bg: #f8fafc;
+  --bs-body-color: #0f172a;
+  --bs-border-color: #e2e8f0;
+  --bs-secondary-color: var(--muted);
+  --bs-link-color: var(--accent);
+  --bs-link-hover-color: var(--accent-hover);
+  --bs-danger: #dc2626;
+  --bs-danger-rgb: 220, 38, 38;
+  --bs-form-invalid-color: #dc2626;
+  --bs-form-invalid-border-color: #dc2626;
+  --bs-success: #16a34a;
+  --bs-success-rgb: 22, 163, 74;
+  --bs-focus-ring-color: rgba(37, 99, 235, .3);
+}
+
+/* Tombol memakai variabel tombol Bootstrap 5.3 */
+.btn-primary {
+  --bs-btn-bg: var(--accent);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-bg: var(--accent-hover);
+  --bs-btn-hover-border-color: var(--accent-hover);
+  --bs-btn-active-bg: var(--accent-hover);
+  --bs-btn-active-border-color: var(--accent-hover);
+  --bs-btn-color: #ffffff;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-active-color: #ffffff;
+  font-weight: 600;
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--accent);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-bg: var(--accent);
+  --bs-btn-hover-border-color: var(--accent);
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-active-bg: var(--accent-hover);
+  --bs-btn-active-border-color: var(--accent-hover);
+  --bs-btn-active-color: #ffffff;
+}
+
+/* Navbar */
+.app-navbar {
+  --bs-navbar-color: #e2e8f0;
+  --bs-navbar-hover-color: #ffffff;
+  --bs-navbar-active-color: var(--primary);
+  --bs-navbar-brand-color: #ffffff;
+  --bs-navbar-brand-hover-color: #ffffff;
+  --bs-navbar-toggler-border-color: rgba(255, 255, 255, .4);
+  background-color: var(--primary);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .05);
+}
+.app-navbar .navbar-brand { font-weight: 700; }
+.app-navbar .navbar-toggler-icon { filter: invert(1); }
+/* Tab aktif: pil putih seperti Tugas 4 */
+.app-navbar .nav-link { border-radius: 6px; padding: 8px 14px; }
+.app-navbar .nav-link:hover { background: rgba(255, 255, 255, .15); }
+.app-navbar .nav-link.active { background: #ffffff; color: var(--primary); font-weight: 600; }
+
+/* Tata letak */
+.app-container { max-width: 800px; }
+.view-section[hidden] { display: none; }
+.view-section > h1 { color: var(--primary); }
+
+.section-title {
+  font-weight: 600; margin: 24px 0 12px;
+  color: var(--muted); text-transform: uppercase;
+  font-size: .85rem; letter-spacing: .05em;
+}
+
+/* Kartu agenda */
+.badge-kategori { background-color: #dbeafe; color: var(--accent); font-weight: 600; }
+
+/* Media galeri: tinggi tetap supaya tata letak tidak melompat; fallback teks bila gagal dimuat */
+.img-wrapper {
+  height: 180px; background-color: #e2e8f0; border-radius: 6px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.media-img { width: 100%; height: 100%; object-fit: cover; }
+.img-fallback { color: var(--muted); font-size: .85rem; text-align: center; padding: 10px; }
+
+.avatar {
+  flex: 0 0 auto; width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--primary); color: #ffffff; font-weight: 700; font-size: 1.2rem;
+}
+
+body { overflow-x: hidden; }
