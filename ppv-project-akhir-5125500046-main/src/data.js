@@ -1,36 +1,38 @@
-// src/data.js — Gudang Data dan State Proyek Akhir MMB Hub
+// src/data.js — Modul Data dan State Proyek Akhir MMB Hub
 
-export const daftarEvent = [
+let daftarEvent = [
   {
-    id: "mmb-fest-2026",
+    id: 1,
     judul: "MMB FEST 2026",
     kategori: "Festival",
-    tanggal: "20 Oktober 2026",
+    tanggal: "25 Oktober 2026",
     lokasi: "Gedung Teater PENS",
-    deskripsi: "Semua ruhunan pameran karya multimedia, musik indie, dan pasar kreatif MMB.",
-    status: "Tersedia"
+    deskripsi: "Pameran karya multimedia, musik indie, dan pasar kreatif MMB."
   },
   {
-    id: "workshop-motion",
+    id: 2,
     judul: "Workshop Motion Graphics",
     kategori: "Workshop",
-    tanggal: "5 November 2026",
+    tanggal: "12 November 2026",
     lokasi: "Lab Komputer MMB",
-    deskripsi: "Pelatihan asesmen skrip dan animasi 3D menggunakan After Effects & Lottie.",
-    status: "Tersedia"
-  },
-  {
-    id: "screening-film",
-    judul: "Screening Film Pendek Kampus",
-    kategori: "Screening",
-    tanggal: "18 November 2026",
-    lokasi: "Aula Pascasarjana PENS",
-    deskripsi: "Pemutaran film pendek, karya mahasiswa kampus.",
-    status: "Tersedia"
+    deskripsi: "Pelatihan asesmen skrip dan animasi 3D menggunakan After Effects & Lottie."
   }
 ];
 
-// Fungsi untuk mengambil data event
-export function ambilSemuaEvent() {
+// Ambil data dari localStorage jika ada, atau gunakan default
+export function ambilDataEvent() {
+  const dataSimpan = localStorage.getItem('mmb-project-event');
+  if (dataSimpan) {
+    try {
+      daftarEvent = JSON.parse(dataSimpan);
+    } catch (e) {
+      console.error("Gagal parse data:", e);
+    }
+  }
   return daftarEvent;
+}
+
+export function tambahEventBaru(eventBaru) {
+  daftarEvent.push(eventBaru);
+  localStorage.setItem('mmb-project-event', JSON.stringify(daftarEvent));
 }

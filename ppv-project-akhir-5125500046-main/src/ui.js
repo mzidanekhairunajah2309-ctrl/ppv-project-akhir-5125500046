@@ -1,32 +1,42 @@
-// src/ui.js — Mengurus Render Tampilan dan DOM
+// src/ui.js — Modul Tampilan / Render DOM
 
-export function renderGaleriEvent(dataEvent) {
-  const container = document.querySelector('#daftar-event') || document.querySelector('.grid') || document.body;
-  // Jika kontainer tidak ditemukan spesifik, kita pastikan aman
+export function renderEventGrid(data) {
+  const container = document.getElementById('event-grid');
+  const selectDropdown = document.getElementById('pilihan-event');
+  
   if (!container) return;
 
-  // Render kartu event secara dinamis
-  // Perhatikan: Menggunakan data-id dan data-action, TANPA onclick="..."
-  let htmlContent = '';
-  dataEvent.forEach(ev => {
-    htmlContent += `
-      <div class="col-md-4 mb-3">
+  container.innerHTML = '';
+  if (selectDropdown) selectDropdown.innerHTML = '';
+
+  if (data.length === 0) {
+    container.innerHTML = '<p class="text-muted">Belum ada agenda event.</p>';
+    return;
+  }
+
+  data.forEach(ev => {
+    // Render kartu event
+    const cardHTML = `
+      <div class="col-12 col-md-6 mb-3">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <span class="badge bg-primary mb-2">${ev.kategori}</span>
+            <span class="badge bg-secondary mb-2">${ev.kategori || 'Event'}</span>
             <h5 class="card-title">${ev.judul}</h5>
-            <p class="card-text text-muted small"><i class="bi bi-calendar"></i> ${ev.tanggal}</p>
+            <p class="text-muted small mb-1"><i class="bi bi-calendar"></i> ${ev.tanggal} | ${ev.lokasi || ''}</p>
             <p class="card-text">${ev.deskripsi}</p>
-            <button class="btn btn-outline-primary btn-sm" data-action="detail" data-id="${ev.id}">Lihat Detail</button>
+            <button type="button" class="btn btn-outline-primary btn-sm" data-action="detail" data-id="${ev.id}">Lihat Detail</button>
           </div>
         </div>
       </div>
     `;
+    container.innerHTML += cardHTML;
+
+    // Render pilihan ke select dropdown form RSVP
+    if (selectDropdown) {
+      const option = document.createElement('option');
+      option.value = ev.judul;
+      option.textContent = ev.judul;
+      selectDropdown.appendChild(option);
+    }
   });
-  
-  // Jika ada elemen penampung khusus grid event
-  const targetGrid = document.getElementById('semua-event-grid');
-  if (targetGrid) {
-    targetGrid.innerHTML = htmlContent;
-  }
 }
