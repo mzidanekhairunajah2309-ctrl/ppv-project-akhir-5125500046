@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1747">
+  <title>MMB Media & Event Hub — Project Akhir PPV</title>
+  <!-- Penanda JS: gaya animasi masuk hanya aktif bila skrip berjalan, jadi konten tidak pernah tersembunyi tanpa JS. -->
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preload" href="vendor/fonts/bricolage-grotesque-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Bootstrap 5.3.3 (salinan lokal, versi terkunci). Urutan penting: pustaka dulu, gaya sendiri sesudahnya. -->
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body data-tampilan="event">
+  <!-- Latar atmosfer: tiga lapis gradien, satu per tampilan, berganti dengan crossfade -->
+  <div class="atmosfer" aria-hidden="true">
+    <i class="atmosfer__lapis atmosfer__lapis--event"></i>
+    <i class="atmosfer__lapis atmosfer__lapis--galeri"></i>
+    <i class="atmosfer__lapis atmosfer__lapis--tentang"></i>
+  </div>
+
+  <a class="visually-hidden-focusable" href="#konten">Lewati ke konten</a>
+
+  <!-- KOMPONEN 1: Navbar (collapse di layar sempit) -->
+  <nav class="navbar navbar-expand-md app-navbar sticky-top" aria-label="Navigasi utama">
+    <div class="container-fluid app-navbar__isi">
+      <a class="navbar-brand" href="#event" data-view="event">
+        <svg class="merek-tanda" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <defs><linearGradient id="gradien-merek" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2457e6"/><stop offset=".55" stop-color="#7a4bd6"/><stop offset="1" stop-color="#ffae4d"/></linearGradient></defs>
+          <rect width="32" height="32" rx="10" fill="url(#gradien-merek)"/>
+          <circle cx="16" cy="16" r="3" fill="#fff"/>
+          <circle cx="16" cy="16" r="7.5" fill="none" stroke="#fff" stroke-opacity=".78" stroke-width="1.6"/>
+          <circle cx="16" cy="16" r="12" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1.4"/>
+        </svg>
+        <span>MMB Hub</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuUtama"
+              aria-controls="menuUtama" aria-expanded="false" aria-label="Buka menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuUtama">
+        <span class="nav-indikator" aria-hidden="true"></span>
+        <ul class="navbar-nav ms-md-auto" id="menu-tampilan">
+<li class="nav-item"><button type="button" class="nav-link active" data-view="event" data-sfx="transisi" aria-current="page">Event &amp; Agenda</button></li>
+<li class="nav-item"><button type="button" class="nav-link" data-view="galeri" data-sfx="transisi">Galeri Karya</button></li>
+<li class="nav-item"><button type="button" class="nav-link" data-view="tentang" data-sfx="transisi">Tentang Pembuat</button></li>
+        </ul>
+      </div>
+      <!-- Kontrol suara: mati secara bawaan, tidak ada audio yang berbunyi sebelum pengguna menyalakannya -->
+      <button type="button" class="tombol-suara" id="tombol-suara" data-sfx="diam" aria-pressed="false" aria-label="Suara antarmuka" title="Nyalakan efek suara klik dan transisi">
+        <span class="tally" aria-hidden="true"></span>
+        <span class="tombol-suara__teks">Suara <span id="status-suara" class="tombol-suara__status">mati</span></span>
+      </button>
+    </div>
+  </nav>
+  <p class="visually-hidden" id="pengumuman-suara" role="status" aria-live="polite"></p>
+
+  <main id="konten" class="container app-container" tabindex="-1">
+
+    <p id="peringatan-storage" class="alert alert-warning" role="alert" hidden></p>
+
+    <!-- Tampilan 1: Event & Agenda -->
+    <section id="event" class="view-section aktif" aria-labelledby="judul-event">
+
+      <header class="hero" id="hero">
+        <div class="hero__sprocket hero__sprocket--kiri" aria-hidden="true"></div>
+        <div class="hero__sprocket hero__sprocket--kanan" aria-hidden="true"></div>
+        <div class="hero__cahaya" aria-hidden="true"></div>
+
+        <div class="hero__isi">
+          <p class="hero__lencana">Platform info event &amp; kreativitas mahasiswa Multimedia Broadcasting PENS</p>
+          <h1 id="judul-event" class="hero__judul">Agenda &amp; Pendaftaran Event MMB</h1>
+          <p class="hero__lead">Lihat agenda, buka detail event, lalu daftar langsung dari satu halaman. Pendaftaran tersimpan di perangkat ini.</p>
+          <div class="hero__aksi">
+            <a class="btn btn-terang" href="#agenda">Lihat agenda</a>
+            <a class="btn btn-kaca" href="#form-pendaftaran">Daftar sekarang</a>
+          </div>
+        </div>
+
+        <figure class="hero__poster" aria-label="Poster MMB FEST 2026 dengan pemutar jingle">
+          <svg class="cincin" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+            <circle cx="200" cy="200" r="190"/><circle cx="200" cy="200" r="190"/><circle cx="200" cy="200" r="190"/><circle cx="200" cy="200" r="190"/>
+          </svg>
+          <div class="bingkai">
+            <img class="bingkai__gambar" src="assets/poster-mmbfest.jpg" alt="" width="1280" height="800">
+            <button type="button" class="putar-poster" data-jingle="toggle" data-sfx="diam" aria-pressed="false">
+              <span class="putar-poster__ikon" aria-hidden="true">
+                <svg class="ikon-putar" viewBox="0 0 24 24" focusable="false"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+                <svg class="ikon-jeda" viewBox="0 0 24 24" focusable="false"><rect x="6.5" y="5" width="4" height="14" rx="1.3" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.3" fill="currentColor"/></svg>
+              </span>
+              <span>Dengar jingle MMB FEST</span>
+            </button>
+          </div>
+        </figure>
+      </header>
+
+      <div class="bagian" id="agenda">
+        <h2 class="section-title" data-reveal>Daftar Agenda</h2>
+        <div id="event-grid" class="agenda-grid"></div>
+      </div>
+
+      <div class="bagian bagian--daftar" id="pendaftaran">
+        <!-- KOMPONEN 2: Card (form pendaftaran) -->
+        <div class="card kaca form-kartu" id="form-pendaftaran" data-reveal>
+          <div class="card-body">
+            <h2 class="card-title">Pendaftaran Cepat Event</h2>
+            <form id="form-rsvp" novalidate>
+              <div class="mb-3 field">
+                <label for="nama" class="form-label">Nama Lengkap</label>
+                <input type="text" id="nama" name="nama" class="form-control" placeholder="mis. Muhammad Zidane" autocomplete="name" required maxlength="100" aria-describedby="err-nama">
+                <div id="err-nama" class="invalid-feedback" role="alert"></div>
+              </div>
+              <div class="mb-4 field">
+                <label for="pilihan-event" class="form-label">Pilih Event</label>
+                <select id="pilihan-event" name="pilihan-event" class="form-select" required aria-describedby="err-event"></select>
+                <div id="err-event" class="invalid-feedback" role="alert"></div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-kirim w-100">Daftar Sekarang</button>
+            </form>
+          </div>
+        </div>
+
+        <aside class="riwayat" aria-labelledby="judul-riwayat" data-reveal>
+          <h2 class="section-title" id="judul-riwayat">Riwayat Pendaftaran di Perangkat Ini</h2>
+          <p class="small text-body-secondary">Data tidak dikirim ke panitia atau disinkronkan ke perangkat lain.</p>
+          <div id="rsvp-kosong" class="kosong">
+            <svg class="kosong__ikon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8.5a2 2 0 0 0 2-2h12a2 2 0 0 0 2 2v1.8a2 2 0 0 0 0 3.4v1.8a2 2 0 0 0-2 2H6a2 2 0 0 0-2-2v-1.8a2 2 0 0 0 0-3.4Z"/><path d="M14.5 6.5v11" stroke-dasharray="1.6 2.4"/></svg>
+            <p class="mb-0">Belum ada pendaftaran.</p>
+            <p class="small text-body-secondary mb-0">Isi formulir, dan tiketmu muncul di sini.</p>
+          </div>
+          <ul id="daftar-rsvp" class="tiket-daftar"></ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Tampilan 2: Galeri Karya (media gambar + audio) -->
+    <section id="galeri" class="view-section" hidden aria-labelledby="judul-galeri">
+      <h1 id="judul-galeri" class="judul-halaman">Galeri Karya &amp; Aset Media</h1>
+
+      <div class="card kaca pemutar" id="pemutar">
+        <div class="card-body">
+          <h2 class="card-title"><svg class="ikon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg> Audio Highlight: Theme Song MMB FEST</h2>
+          <p class="text-body-secondary small">Sampel audio promosi event MMB FEST 2026</p>
+
+          <!-- Pemutar bawaan peramban tetap ada sebagai cadangan; JS menyembunyikannya dan menampilkan pemutar kustom -->
+          <div class="pemutar__asli">
+            <audio id="audio-jingle" controls class="w-100">
+              <source src="assets/jingle-mmbfest.mp3" type="audio/mpeg">
+              <source src="assets/jingle-mmbfest.ogg" type="audio/ogg">
+              Peramban Anda tidak mendukung elemen pemutar audio.
+            </audio>
+          </div>
+
+          <div class="pemutar__kustom" hidden>
+            <button type="button" class="tombol-putar" data-jingle="toggle" data-sfx="diam" aria-pressed="false" aria-label="Putar jingle MMB FEST">
+              <svg class="ikon-putar" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+              <svg class="ikon-jeda" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="5" width="4" height="14" rx="1.3" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.3" fill="currentColor"/></svg>
+            </button>
+            <div class="pemutar__jalur">
+              <div class="gelombang" id="gelombang" style="--p:0%">
+                <div class="gelombang__dasar" aria-hidden="true"></div>
+                <div class="gelombang__isi" aria-hidden="true"></div>
+                <input type="range" class="gelombang__geser" id="geser-audio" data-sfx="diam" min="0" max="1000" value="0" step="1" aria-label="Posisi audio" aria-valuetext="0:00">
+              </div>
+              <div class="pemutar__waktu" aria-hidden="true"><span id="waktu-kini">0:00</span><span id="waktu-total">0:00</span></div>
+            </div>
+          </div>
+          <p id="audio-pesan" class="text-danger small mt-2 mb-0" role="status" hidden>Audio belum bisa dimuat. Coba muat ulang halaman.</p>
+        </div>
+      </div>
+
+      <div class="galeri-grid">
+        <article class="card karya karya--poster" data-reveal>
+          <div class="img-wrapper">
+            <img src="assets/poster-mmbfest.jpg" alt="Poster Resmi MMB FEST 2026" class="media-img img-fluid" loading="lazy" width="1280" height="800">
+          </div>
+          <div class="karya__keterangan">
+            <h2 class="card-title">Brand Identity MMB FEST 2026</h2>
+            <p class="card-text">Supergraphics &amp; pedoman visual identitas brand MMB FEST.</p>
+          </div>
+        </article>
+        <article class="card karya karya--kopi" data-reveal style="--i:1">
+          <div class="img-wrapper">
+            <img src="assets/kopi-tjangkir.jpg" alt="Desain Aset Motion Graphics Kopi Tjangkir" class="media-img img-fluid" loading="lazy" width="1280" height="800">
+          </div>
+          <div class="karya__keterangan">
+            <h2 class="card-title">Motion Graphics Kopi Tjangkir</h2>
+            <p class="card-text">Katalog aset animasi promosional cafe dan spot kreatif.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Tampilan 3: Tentang Pembuat -->
+    <section id="tentang" class="view-section" hidden aria-labelledby="judul-tentang">
+      <h1 id="judul-tentang" class="judul-halaman">Tentang Pembuat Prototipe</h1>
+      <div class="profil">
+        <div class="card profil__kartu" data-reveal>
+          <svg class="profil__cincin" viewBox="0 0 400 400" aria-hidden="true" focusable="false"><circle cx="200" cy="200" r="60"/><circle cx="200" cy="200" r="110"/><circle cx="200" cy="200" r="160"/><circle cx="200" cy="200" r="210"/></svg>
+          <div class="avatar" aria-hidden="true">MZ</div>
+          <h2 class="profil__nama">Muhammad Zidane Khairu Najah</h2>
+          <dl class="profil__data">
+            <div><dt>NRP</dt><dd>5125500046</dd></div>
+            <div><dt>Kelas</dt><dd>3 D3 MM B</dd></div>
+            <div><dt>Institusi</dt><dd>Politeknik Elektronika Negeri Surabaya (PENS)</dd></div>
+          </dl>
+        </div>
+
+        <div class="profil__keahlian" data-reveal style="--i:1">
+          <h3 class="profil__judul-kecil">Fokus Keahlian &amp; Minat:</h3>
+          <ul class="keahlian">
+            <li class="keahlian__item nada-1">
+              <span class="keahlian__ikon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.8 0-1.2-1-1.5-1-2.7 0-1 .8-1.5 1.8-1.5H17a4 4 0 0 0 4-4C21 6.3 17 3 12 3Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="14.5" cy="7.5" r="1"/></svg></span>
+              <span>Graphic Design &amp; Visual Brand Identity</span>
+            </li>
+            <li class="keahlian__item nada-2">
+              <span class="keahlian__ikon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></svg></span>
+              <span>Motion Graphics &amp; 2D Animation</span>
+            </li>
+            <li class="keahlian__item nada-3">
+              <span class="keahlian__ikon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span>
+              <span>Pemrograman Visual &amp; Front-End Web Development</span>
+            </li>
+          </ul>
+          <p class="small text-body-secondary mb-0">Dikembangkan dari Tugas 4 menjadi Project Akhir Praktikum Pemrograman Visual (TB033109).</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container app-container">
+      <p class="mb-0"><strong>MMB Hub</strong> adalah prototipe lokal agenda dan pendaftaran event Multimedia Broadcasting PENS. Data pendaftaran hanya tersimpan di perangkat ini.</p>
+    </div>
+  </footer>
+
+  <!-- KOMPONEN 3: Modal (detail event) -->
+  <div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="judulDetail" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-kaca">
+        <div class="modal-header">
+          <div class="modal-header__teks">
+            <span class="badge badge-kategori mb-2" data-kategori></span>
+            <h2 class="modal-title" id="judulDetail" data-judul></h2>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+          <dl class="modal-info">
+            <div><dt>Tanggal</dt><dd data-tanggal></dd></div>
+            <div><dt>Lokasi</dt><dd data-lokasi></dd></div>
+          </dl>
+          <p data-isi class="mb-0"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-tepi" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary" id="tombol-daftar-modal">Daftar event ini</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KOMPONEN 4: Toast (umpan balik pendaftaran) -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastInfo" class="toast toast-kaca border-0" data-jenis="sukses" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex align-items-start gap-3">
+        <span class="toast-ikon" aria-hidden="true">
+          <svg class="toast-ikon__sukses" viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+          <svg class="toast-ikon__peringatan" viewBox="0 0 24 24" focusable="false"><path d="M12 8v5M12 16.6v.01"/></svg>
+        </span>
+        <div class="toast-body" data-pesan></div>
+        <button type="button" class="btn-close me-1" data-bs-dismiss="toast" aria-label="Tutup"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bundle JS Bootstrap (sudah termasuk Popper), versi terkunci. Hanya ui-pustaka.js yang memanggil API-nya. -->
+  <script src="vendor/bootstrap.bundle.min.js" defer></script>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
